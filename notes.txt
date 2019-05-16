@@ -1,1 +1,0 @@
-Ovo je fajl napravljen sa fs iz node.js. A ovo je sad dodat text. Ovo je sad dodat text sa appendFileSync u notes.txt

@@ -16,6 +16,19 @@ const beleske = require('./notes.js');
 //? 1. If a note is removed, print "Note removed!" with a green background
 //? 2. If no note is removed, print "No note found!" with a red background
 
+// Goal: Refactor all functions
+// 1. If function is a method, use ES6 method definition syntax
+// 2. Otherwise, use most concise arrow function possible
+// 3. Test your work
+
+
+// Goal: wire up list command
+// 1. Create and export listNodes from notes.js
+    // - "Your note" using chalk
+    // - Print note title for each note
+// 2. Call listNotes from command handler
+// 3. Test ur work!
+
 //* Customize yargs version
 yargs.version('1.1.0'); // pre ovoga je bila 1.0.0
 
@@ -35,7 +48,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function(argv){
+    handler(argv){
         beleske.addNote(argv.title, argv.body)
     }
 });
@@ -51,7 +64,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function (argv) {
+    handler(argv) {
         beleske.removeNote(argv.title);
     }
 }); 
@@ -60,8 +73,9 @@ yargs.command({
 yargs.command({
     command: 'listaj',
     describe: 'Listaj sve beleske',
-    handler: function () {
-        console.log('Izlistavanje svih beleski');
+    handler() {
+        // console.log('Izlistavanje svih beleski');
+        beleske.listNotes();
     }
 });
 
@@ -69,8 +83,16 @@ yargs.command({
 yargs.command({
     command: 'citaj',
     describe: 'Citaj sve beleske',
-    handler: function () {
-        console.log('Citanje beleski');
+    builder: {
+        title: {
+            describe: 'Naslov beleski',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv) {
+        // console.log('Citanje beleski');
+        beleske.readNote(argv.title);
     }
 })
 
