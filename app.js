@@ -1,30 +1,20 @@
 // const validator = require('validator');
 const chalk = require('chalk');
 const yargs = require('yargs');
-const getNotes = require('./notes.js');
-
-// const beleske = getNotes("Moje beleske.....");
-// console.log(beleske);
-
-// const zelenaMsg = chalk.green .inverse.bold('Success!');
-// console.log(zelenaMsg);
+const beleske = require('./notes.js');
 
 
-// console.log(validator.isEmail('delete.database@example.com'));
-// console.log(validator.isURL('https://mead.io'));
+//? Challenge: Setup command option and function
+//? 1. Setup the remove command to take a required "--title" option
+//? 2. Create and export a removeNote function from notes.js
+//? 3. Call removeNote in remove command handler
+//? 4. Have removeNote log the title of the note to be removed 
+//? 5. Test your work using: node app.js remove --title="some title"
 
-// console.log(process.argv[2]); //? argv iliti arguments vector je niz koji sadrzi sve obezbedjene argumente
 
-// const command = process.argv[2];
-// console.log(process.argv);
-
-// if (command === 'add') {
-//     console.log('Adding note!');
-// } else if (command === 'remove') {
-//     console.log('Removing note!');
-// }
-
-// console.log(process.argv);
+//? CHALLENGE: Use chalk to provide useful logs for remove:
+//? 1. If a note is removed, print "Note removed!" with a green background
+//? 2. If no note is removed, print "No note found!" with a red background
 
 //* Customize yargs version
 yargs.version('1.1.0'); // pre ovoga je bila 1.0.0
@@ -46,8 +36,7 @@ yargs.command({
         }
     },
     handler: function(argv){
-        console.log(`Naslov: ${argv.title}.
-        Sadrzaj beleske: ${argv.body}`);
+        beleske.addNote(argv.title, argv.body)
     }
 });
 
@@ -55,13 +44,15 @@ yargs.command({
 yargs.command({
     command: 'ukloni',
     describe: 'Ukloni belesku',
-    // builder: {
-    //     title: {
-    //         describe: "Naslov beleske"
-    //     }
-    // },
-    handler: function () {
-        console.log('Uklanjanje beleske');
+    builder: {
+        title: {
+            describe: "Naslov beleske",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        beleske.removeNote(argv.title);
     }
 }); 
 
